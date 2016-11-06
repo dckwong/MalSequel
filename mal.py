@@ -16,6 +16,8 @@ class ThreadUrl(threading.Thread):
         while True:
             #grabs host from queue
             host = self.queue.get()
+
+            time.sleep(1);
     
             #grabs urls of hosts and prints first 1024 bytes of page
             url = urllib2.urlopen(host)
@@ -23,6 +25,7 @@ class ThreadUrl(threading.Thread):
             
             #signals to queue job is done
             self.queue.task_done()
+
             
 def getUser():
     user = raw_input("Please input your MAL username: ")
@@ -103,10 +106,10 @@ def searchRelated(soup,sequelsOnly):
 def getRelated(urls,sequelsOnly):
     sequels = list()
     threads = []
-    #for url in urls:
-#        soup = openPage(url)
-    for url in requests: 
-        soup = TopenPage(url)
+    for url in urls:
+        soup = openPage(url)
+    # for url in requests: 
+    #     soup = TopenPage(url)
         relatedTable = soup.find("table",{"class":"anime_detail_related_anime"})
         if relatedTable != None:
             if sequelsOnly:
